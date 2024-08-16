@@ -1,0 +1,7 @@
+{
+  "name": "Hexed",
+  "author": "kellaux",
+  "main": "main.java.hexed.Main",
+  "description": "the hexed game.",
+  "version": 1.0
+}
