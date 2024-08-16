@@ -34,6 +34,7 @@ import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
 import mindustry.mod.Plugin;
+import mindustry.net.WorldReloader;
 import mindustry.type.ItemStack;
 import mindustry.world.Build;
 import mindustry.world.Tile;
@@ -59,6 +60,7 @@ public class Main extends Plugin {
 		rules.buildSpeedMultiplier = 2f;
 		rules.blockHealthMultiplier = 1.5f;
 		rules.unitBuildSpeedMultiplier = 1.75f;
+		rules.infiniteResources = true;
 
 		// i want to put it in a file but i cant :(
 		baseSchematic = Schematics.readBase64(
@@ -84,8 +86,10 @@ public class Main extends Plugin {
 		});
 
 		Events.on(PlayerJoin.class, event -> {
+			Log.info("DEBUG");
 			PlayerData data = PlayerData.getData(event.player);
 			if (data == null) {
+
 				loadout(event.player);
 			} else {
 				data.left.cancel();
@@ -125,6 +129,7 @@ public class Main extends Plugin {
 		if (hex == null) {
 
 		} else {
+
 			player.team(PlayerData.getTeam());
 			PlayerData.players.add(new PlayerData(player, player.team()));
 
@@ -175,6 +180,9 @@ public class Main extends Plugin {
 	}
 
 	public void startGame() {
+		WorldReloader reloader = new WorldReloader();
+		reloader.begin();
+
 		HexData.initHexes();
 		PlayerData.initTeams();
 
@@ -183,17 +191,28 @@ public class Main extends Plugin {
 
 		state.rules = rules.copy();
 		logic.play();
+
+		reloader.end();
 	}
 
 	public void endGame() {
 		Events.fire("Gameover");
+		Seq<Player> players = Groups.player.copy(new Seq<>());
+
+		// clear datas
 		HexData.hexes.clear();
 		PlayerData.players.clear();
 		PlayerData.teams.clear();
+		PlayerData.requests.clear();
 
+		// reload map
 		startGame();
 		counter = roundTime;
 
+		// reload players
+		players.each(player -> {
+			loadout(player);
+		});
 	}
 
 	public void updateText(Player player) {
@@ -278,7 +297,8 @@ public class Main extends Plugin {
 				} else {
 					data.player.sendMessage(
 							player.coloredName()
-									+ " [white]has sent you aninvitation. Type /accept " + player.name + " to accpet it into team");
+									+ " [white]has sent you aninvitation. Type /accept " + player.name
+									+ " to accpet it into team");
 					PlayerData.requests.add(new RequestData(player, data.player));
 				}
 			}

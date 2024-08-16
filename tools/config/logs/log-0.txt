@@ -4684,3 +4684,76 @@
 	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:87)
 	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
 
+[08-17-2024 00:53:29] [I] 1 mods loaded.
+[08-17-2024 00:53:29] [I] Server loaded. Type 'help' for help.
+[08-17-2024 00:53:33] [I] Opened a server on port 6567.
+[08-17-2024 00:53:53] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:07:22] [E] Too few command arguments. Usage: js <script...>
+[08-17-2024 01:07:25] [I] EcmaError: ReferenceError: "rules" is not defined. (console.js#1)
+[08-17-2024 01:07:47] [I] EcmaError: ReferenceError: "state" is not defined. (console.js#1)
+[08-17-2024 01:07:53] [I] EcmaError: ReferenceError: "rules" is not defined. (console.js#1)
+[08-17-2024 01:08:20] [I] EvaluatorException: Java class "mindustry.game.Rules" has no public instance field or method named "infiniteResources". (console.js#1)
+[08-17-2024 01:09:01] [I] EvaluatorException: missing ; before statement (console.js#1)
+[08-17-2024 01:09:03] [I] EvaluatorException: missing ; before statement (console.js#1)
+[08-17-2024 01:11:01] [I] 1 mods loaded.
+[08-17-2024 01:11:01] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:11:05] [I] Opened a server on port 6567.
+[08-17-2024 01:11:09] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:11:58] [I] 1 mods loaded.
+[08-17-2024 01:11:58] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:12:05] [I] Opened a server on port 6567.
+[08-17-2024 01:12:09] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:12:30] [I] <kellaux: /lb>
+[08-17-2024 01:12:37] [I] <kellaux: /lb>
+[08-17-2024 01:12:43] [I] <kellaux: /lb>
+[08-17-2024 01:12:50] [I] <kellaux: /lb>
+[08-17-2024 01:12:57] [I] <kellaux: /lb>
+[08-17-2024 01:13:00] [I] <kellaux: /lb>
+[08-17-2024 01:13:03] [I] <kellaux: /lb>
+[08-17-2024 01:16:51] [I] 1 mods loaded.
+[08-17-2024 01:16:51] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:16:55] [I] Opened a server on port 6567.
+[08-17-2024 01:16:58] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:17:28] [I] <kellaux: /lb>
+[08-17-2024 01:17:39] [I] <kellaux: /lb>
+[08-17-2024 01:17:42] [I] <kellaux: /lb>
+[08-17-2024 01:22:50] [I] 1 mods loaded.
+[08-17-2024 01:22:50] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:23:03] [I] Opened a server on port 6567.
+[08-17-2024 01:23:05] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:26:51] [I] 1 mods loaded.
+[08-17-2024 01:26:51] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:26:55] [I] Opened a server on port 6567.
+[08-17-2024 01:26:58] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:26:58] [I] DEBUG
+[08-17-2024 01:29:19] [I] 1 mods loaded.
+[08-17-2024 01:29:19] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:29:23] [I] Opened a server on port 6567.
+[08-17-2024 01:29:27] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:29:27] [I] DEBUG
+[08-17-2024 01:31:09] [I] 1 mods loaded.
+[08-17-2024 01:31:09] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:31:15] [I] Opened a server on port 6567.
+[08-17-2024 01:31:16] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:36:04] [I] 1 mods loaded.
+[08-17-2024 01:36:04] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:36:59] [I] Opened a server on port 6567.
+[08-17-2024 01:37:00] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:46:02] [I] 1 mods loaded.
+[08-17-2024 01:46:02] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:46:10] [I] Opened a server on port 6567.
+[08-17-2024 01:46:11] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:48:00] [I] 1 mods loaded.
+[08-17-2024 01:48:00] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:48:12] [I] Opened a server on port 6567.
+[08-17-2024 01:48:13] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:52:11] [I] 1 mods loaded.
+[08-17-2024 01:52:11] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:52:15] [I] Opened a server on port 6567.
+[08-17-2024 01:52:32] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:52:32] [I] DEBUG
+[08-17-2024 01:56:04] [I] 1 mods loaded.
+[08-17-2024 01:56:04] [I] Server loaded. Type 'help' for help.
+[08-17-2024 01:56:08] [I] Opened a server on port 6567.
+[08-17-2024 01:56:10] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 01:56:10] [I] DEBUG
