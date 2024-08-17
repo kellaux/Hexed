@@ -5096,3 +5096,63 @@
 [08-17-2024 17:43:30] [I] <kellaux: /join>
 [08-17-2024 17:43:37] [I] <myrmyrmux: /accept>
 [08-17-2024 17:43:42] [I] <kellaux: /join>
+[08-17-2024 20:03:12] [I] 1 mods loaded.
+[08-17-2024 20:03:12] [I] Server loaded. Type 'help' for help.
+[08-17-2024 20:04:12] [I] Opened a server on port 6567.
+[08-17-2024 20:04:21] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 20:05:36] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 20:07:23] [I] 1 mods loaded.
+[08-17-2024 20:07:23] [I] Server loaded. Type 'help' for help.
+[08-17-2024 20:07:27] [I] Opened a server on port 6567.
+[08-17-2024 20:07:29] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 20:11:00] [I] 1 mods loaded.
+[08-17-2024 20:11:00] [I] Server loaded. Type 'help' for help.
+[08-17-2024 20:11:03] [I] Opened a server on port 6567.
+[08-17-2024 20:11:05] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 20:11:06] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 20:11:21] [I] <myrmyrmux: /join>
+[08-17-2024 20:12:08] [I] <kellaux: /accept>
+[08-17-2024 20:12:14] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (closed)
+[08-17-2024 20:15:25] [I] 1 mods loaded.
+[08-17-2024 20:15:25] [I] Server loaded. Type 'help' for help.
+[08-17-2024 20:15:31] [I] Opened a server on port 6567.
+[08-17-2024 20:15:33] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 20:16:20] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 20:16:20] [E] java.lang.IndexOutOfBoundsException: index can't be >= size: 255 >= 254
+	at arc.struct.IntSeq.removeIndex(IntSeq.java:271)
+	at main.java.hexed.HexData$PlayerData.getTeam(HexData.java:61)
+	at main.java.hexed.Main.loadout(Main.java:136)
+	at main.java.hexed.Main.lambda$init$2(Main.java:96)
+	at arc.Events.fire(Events.java:53)
+	at arc.Events.fire(Events.java:43)
+	at mindustry.core.NetServer.connectConfirm(NetServer.java:813)
+	at mindustry.gen.ConnectConfirmCallPacket.handleServer(ConnectConfirmCallPacket.java:32)
+	at mindustry.net.Net.handleServerReceived(Net.java:312)
+	at mindustry.net.ArcNetProvider$2.lambda$received$2(ArcNetProvider.java:150)
+	at arc.util.TaskQueue.run(TaskQueue.java:17)
+	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:81)
+	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
+
+[08-17-2024 20:16:32] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (closed)
+[08-17-2024 20:16:35] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 20:16:42] [I] <myrmyrmux: /join>
+[08-17-2024 20:16:48] [I] <kellaux: /accept>
+[08-17-2024 20:16:56] [I] <myrmyrmux: /spectate>
+[08-17-2024 20:17:06] [I] <kellaux: /spectate>
+[08-17-2024 20:17:09] [I] <kellaux: /spectate>
+[08-17-2024 20:17:11] [I] <kellaux: /spectate>
+[08-17-2024 20:18:13] [I] <myrmyrmux: /spectate>
+[08-17-2024 20:19:12] [I] 1 mods loaded.
+[08-17-2024 20:19:12] [I] Server loaded. Type 'help' for help.
+[08-17-2024 20:19:19] [I] Opened a server on port 6567.
+[08-17-2024 20:19:21] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 20:19:25] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 20:19:29] [I] <myrmyrmux: /join>
+[08-17-2024 20:19:34] [I] <myrmyrmux: /join>
+[08-17-2024 20:19:43] [I] <myrmyrmux: /join>
+[08-17-2024 20:19:51] [I] <myrmyrmux: /accept>
+[08-17-2024 20:19:56] [I] <kellaux: /accpet>
+[08-17-2024 20:20:00] [I] <kellaux: /accept>
+[08-17-2024 20:20:09] [I] <kellaux: /spectate>
+[08-17-2024 20:20:09] [I] DEBUG
+[08-17-2024 20:20:38] [I] <kellaux: /sync>

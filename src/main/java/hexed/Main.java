@@ -32,6 +32,7 @@ import mindustry.game.EventType.Trigger;
 import mindustry.game.Rules;
 import mindustry.game.Schematic;
 import mindustry.game.Schematic.Stile;
+import mindustry.game.Teams.TeamData;
 import mindustry.game.Schematics;
 import mindustry.game.Team;
 import mindustry.gen.Call;
@@ -44,6 +45,7 @@ import mindustry.ui.Menus;
 import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.meta.StatCat;
 
 public class Main extends Plugin {
 
@@ -78,9 +80,7 @@ public class Main extends Plugin {
 			PlayerData.players.each(data -> {
 				updateText(data.player);
 				if (data.getControlledCount() >= winCaptureCount) {
-					Groups.player.each(player -> {
-						player.sendMessage(data.player.coloredName() + " win this round");
-					});
+					Call.infoMessage(data.player.coloredName() + " win this round");
 					endGame();
 				}
 			});
@@ -93,7 +93,6 @@ public class Main extends Plugin {
 		Events.on(PlayerJoin.class, event -> {
 			PlayerData data = PlayerData.getData(event.player);
 			if (data == null) {
-
 				loadout(event.player);
 			} else {
 				data.left.cancel();
@@ -103,7 +102,7 @@ public class Main extends Plugin {
 
 		Events.on(PlayerLeave.class, event -> {
 			PlayerData data = PlayerData.getData(event.player);
-			if (data != null) {
+			if (data != null && data.leader) {
 				data.left = Timer.schedule(() -> killTeam(data.team), leftTeamDestroyTime);
 			}
 		});
@@ -118,9 +117,9 @@ public class Main extends Plugin {
 		// TODO
 		Events.on(BlockDestroyEvent.class, event -> {
 			if (event.tile.block() instanceof CoreBlock) {
-				Team team = event.tile.team();
-				if (team.cores().size == 0) {
-					killTeam(team);
+				TeamData data = state.teams.get(event.tile.team());
+				if (data.noCores()) {
+					killTeam(data.team);
 				}
 			}
 		});
@@ -152,6 +151,7 @@ public class Main extends Plugin {
 					}
 				}
 			});
+
 			Call.setCameraPosition(player.con, hex.wx, hex.wy);
 
 		}
@@ -275,12 +275,13 @@ public class Main extends Plugin {
 	public void registerClientCommands(CommandHandler handler) {
 		handler.<Player>register("spectate", "Enter spectator mode. This destroys your base.", (args, player) -> {
 			PlayerData data = PlayerData.getData(player);
-			if (data.leader) {
-				killTeam(player.team());
-			} else if (!data.leader) {
-
-			} else {
+			if (data == null) {
 				loadout(player);
+			} else if (data.leader) {
+				Log.info("DEBUG");
+				killTeam(null);
+			} else {
+				// TODO
 			}
 		});
 
@@ -303,7 +304,7 @@ public class Main extends Plugin {
 						PlayerData.requests.add(new RequestData(sender, recipient));
 						recipient.sendMessage(
 								sender.coloredName()
-										+ " [white]has sent you aninvitation. Type /accept to accpet it into team");
+										+ " [white]has sent you aninvitation. Type /accept to accpet player into team");
 
 					}
 				};
@@ -313,7 +314,7 @@ public class Main extends Plugin {
 				}
 
 				int mainid = Menus.registerMenu(listener);
-				Call.menu(sender.con, mainid, "JOIN", "PLAYERS", options);
+				Call.menu(sender.con, mainid, "/JOIN", "PLAYERS", options);
 
 			}
 
@@ -327,13 +328,18 @@ public class Main extends Plugin {
 			} else {
 				String[][] options = new String[data.size][1];
 				Menus.MenuListener listener = new Menus.MenuListener() {
+
 					@Override
 					public void get(Player recipient, int option) {
 						Player sender = Groups.player.find(p -> p.equals(data.get(option).sender));
 						if (sender == null) {
 
 						} else {
-							killTeam(sender.team());
+
+							if (PlayerData.getData(sender).leader) {
+								killTeam(sender.team());
+							}
+
 							sender.team(recipient.team());
 							PlayerData.players.add(new PlayerData(sender, sender.team(), false));
 							PlayerData.requests.remove(data.get(option));
@@ -347,7 +353,7 @@ public class Main extends Plugin {
 				}
 
 				int mainid = Menus.registerMenu(listener);
-				Call.menu(recipient.con, mainid, "JOIN", "PLAYERS", options);
+				Call.menu(recipient.con, mainid, "/ACCEPT", "PLAYERS", options);
 			}
 		});
 	}
