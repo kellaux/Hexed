@@ -9,6 +9,9 @@ import static mindustry.Vars.tilesize;
 import static mindustry.Vars.world;
 import static mindustry.content.Blocks.air;
 
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+
 import arc.Events;
 import arc.files.Fi;
 import arc.struct.Seq;
@@ -22,6 +25,7 @@ import mindustry.content.Blocks;
 import mindustry.core.GameState.State;
 import mindustry.game.EventType.BlockBuildEndEvent;
 import mindustry.game.EventType.BlockDestroyEvent;
+import mindustry.game.EventType.MenuOptionChooseEvent;
 import mindustry.game.EventType.PlayerJoin;
 import mindustry.game.EventType.PlayerLeave;
 import mindustry.game.EventType.Trigger;
@@ -36,6 +40,7 @@ import mindustry.gen.Player;
 import mindustry.mod.Plugin;
 import mindustry.net.WorldReloader;
 import mindustry.type.ItemStack;
+import mindustry.ui.Menus;
 import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
@@ -86,7 +91,6 @@ public class Main extends Plugin {
 		});
 
 		Events.on(PlayerJoin.class, event -> {
-			Log.info("DEBUG");
 			PlayerData data = PlayerData.getData(event.player);
 			if (data == null) {
 
@@ -148,7 +152,7 @@ public class Main extends Plugin {
 					}
 				}
 			});
-			app.post(() -> Call.setCameraPosition(player.con, hex.wx, hex.wy));
+			Call.setCameraPosition(player.con, hex.wx, hex.wy);
 
 		}
 	}
@@ -285,41 +289,65 @@ public class Main extends Plugin {
 		});
 
 		// TODO
-		handler.<Player>register("join", "<name>", "Join the player.", (args, player) -> {
-			PlayerData data = PlayerData.players
-					.find(d -> d.player.name.equals(args[0]) && !player.name.equals(args[0]) && d.isActive()
-							&& d.leader);
-			if (data == null) {
+		handler.<Player>register("join", "Join the player.", (args, sender) -> {
+			Seq<PlayerData> data = PlayerData.players.select(d -> d.leader &&
+					d.isActive() && d.team != sender.team());
+			if (data.isEmpty()) {
 
 			} else {
-				if (data.team == player.team()) {
+				String[][] options = new String[data.size][1];
+				Menus.MenuListener listener = new Menus.MenuListener() {
+					@Override
+					public void get(Player sender, int option) {
+						Player recipient = data.get(option).player;
+						PlayerData.requests.add(new RequestData(sender, recipient));
+						recipient.sendMessage(
+								sender.coloredName()
+										+ " [white]has sent you aninvitation. Type /accept to accpet it into team");
 
-				} else {
-					data.player.sendMessage(
-							player.coloredName()
-									+ " [white]has sent you aninvitation. Type /accept " + player.name
-									+ " to accpet it into team");
-					PlayerData.requests.add(new RequestData(player, data.player));
+					}
+				};
+
+				for (int i = 0; i < data.size; i++) {
+					options[i][0] = data.get(i).player.coloredName();
 				}
+
+				int mainid = Menus.registerMenu(listener);
+				Call.menu(sender.con, mainid, "JOIN", "PLAYERS", options);
+
 			}
 
 		});
 
-		handler.<Player>register("accept", "<name>", "Accept the invitation", (args, recipient) -> {
-			RequestData data = PlayerData.requests
-					.find(d -> d.recipient.equals(recipient) && d.sender.name.equals(args[0]));
-			if (data == null) {
+		handler.<Player>register("accept", "Accept the invitation", (args, recipient) -> {
+			Seq<RequestData> data = PlayerData.requests
+					.select(d -> d.recipient.equals(recipient));
+			if (data.isEmpty()) {
 
 			} else {
-				Player sender = Groups.player.find(p -> p.name.equals(data.sender.name));
-				if (sender == null) {
+				String[][] options = new String[data.size][1];
+				Menus.MenuListener listener = new Menus.MenuListener() {
+					@Override
+					public void get(Player recipient, int option) {
+						Player sender = Groups.player.find(p -> p.equals(data.get(option).sender));
+						if (sender == null) {
 
-				} else {
-					killTeam(sender.team());
-					sender.team(recipient.team());
-					PlayerData.players.add(new PlayerData(sender, sender.team(), false));
+						} else {
+							killTeam(sender.team());
+							sender.team(recipient.team());
+							PlayerData.players.add(new PlayerData(sender, sender.team(), false));
+							PlayerData.requests.remove(data.get(option));
+						}
+
+					}
+				};
+
+				for (int i = 0; i < data.size; i++) {
+					options[i][0] = data.get(i).sender.coloredName();
 				}
 
+				int mainid = Menus.registerMenu(listener);
+				Call.menu(recipient.con, mainid, "JOIN", "PLAYERS", options);
 			}
 		});
 	}

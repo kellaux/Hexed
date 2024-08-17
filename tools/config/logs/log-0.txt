@@ -4757,3 +4757,342 @@
 [08-17-2024 01:56:08] [I] Opened a server on port 6567.
 [08-17-2024 01:56:10] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
 [08-17-2024 01:56:10] [I] DEBUG
+[08-17-2024 13:42:01] [I] 1 mods loaded.
+[08-17-2024 13:42:01] [I] Server loaded. Type 'help' for help.
+[08-17-2024 13:43:22] [I] Opened a server on port 6567.
+[08-17-2024 13:43:32] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 13:43:39] [I] <kellaux: /join>
+[08-17-2024 13:43:43] [I] <kellaux: /join da>
+[08-17-2024 13:43:48] [I] <kellaux: /join da>
+[08-17-2024 13:43:50] [I] <kellaux: /join da>
+[08-17-2024 13:43:50] [I] <kellaux: /join da>
+[08-17-2024 13:43:51] [I] <kellaux: /join da>
+[08-17-2024 13:43:52] [I] <kellaux: /join da>
+[08-17-2024 13:44:34] [I] 1 mods loaded.
+[08-17-2024 13:44:34] [I] Server loaded. Type 'help' for help.
+[08-17-2024 13:44:40] [I] Opened a server on port 6567.
+[08-17-2024 13:44:42] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 13:44:47] [I] <kellaux: /join k>
+[08-17-2024 13:44:51] [I] <kellaux: /join k>
+[08-17-2024 13:44:54] [I] <kellaux: /join k>
+[08-17-2024 13:52:56] [I] 1 mods loaded.
+[08-17-2024 13:52:56] [I] Server loaded. Type 'help' for help.
+[08-17-2024 13:53:00] [I] Opened a server on port 6567.
+[08-17-2024 13:53:04] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 13:53:07] [I] <kellaux: /join l>
+[08-17-2024 13:53:50] [I] <kellaux: /join l>
+[08-17-2024 13:54:00] [I] <kellaux: /join l>
+[08-17-2024 13:58:27] [I] 1 mods loaded.
+[08-17-2024 13:58:27] [I] Server loaded. Type 'help' for help.
+[08-17-2024 13:58:40] [I] Opened a server on port 6567.
+[08-17-2024 13:58:43] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 13:58:49] [I] <kellaux: /join l>
+[08-17-2024 13:58:49] [I] STR + [0][0] = APPLE
+[08-17-2024 13:58:49] [E] java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at main.java.hexed.Main.lambda$registerClientCommands$18(Main.java:312)
+	at arc.util.CommandHandler.handleMessage(CommandHandler.java:86)
+	at mindustry.core.NetClient.sendChatMessage(NetClient.java:253)
+	at mindustry.gen.SendChatMessageCallPacket.handleServer(SendChatMessageCallPacket.java:37)
+	at mindustry.net.Net.handleServerReceived(Net.java:312)
+	at mindustry.net.ArcNetProvider$2.lambda$received$2(ArcNetProvider.java:150)
+	at arc.util.TaskQueue.run(TaskQueue.java:17)
+	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:81)
+	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
+
+[08-17-2024 14:02:28] [I] 1 mods loaded.
+[08-17-2024 14:02:28] [I] Server loaded. Type 'help' for help.
+[08-17-2024 14:02:35] [I] Opened a server on port 6567.
+[08-17-2024 14:02:37] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 14:02:40] [I] <kellaux: /join l>
+[08-17-2024 14:02:40] [I] STR + [0][0] = APPLE
+[08-17-2024 14:02:40] [I] STR + [1][0] = BANANA
+[08-17-2024 14:03:24] [I] 1 mods loaded.
+[08-17-2024 14:03:24] [I] Server loaded. Type 'help' for help.
+[08-17-2024 14:03:41] [I] 1 mods loaded.
+[08-17-2024 14:03:41] [I] Server loaded. Type 'help' for help.
+[08-17-2024 14:03:44] [I] Opened a server on port 6567.
+[08-17-2024 14:03:47] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 14:03:50] [I] <kellaux: /join l>
+[08-17-2024 14:03:50] [I] STR + [0][0] = APPLE
+[08-17-2024 14:03:50] [I] STR + [1][0] = BANANA
+[08-17-2024 14:03:50] [I] 1
+[08-17-2024 14:03:57] [I] <kellaux: /join l>
+[08-17-2024 14:03:57] [I] STR + [0][0] = APPLE
+[08-17-2024 14:03:57] [I] STR + [1][0] = BANANA
+[08-17-2024 14:03:57] [I] 1
+[08-17-2024 14:06:20] [I] 1 mods loaded.
+[08-17-2024 14:06:20] [I] Server loaded. Type 'help' for help.
+[08-17-2024 14:06:24] [I] Opened a server on port 6567.
+[08-17-2024 14:06:27] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 14:06:30] [I] <kellaux: /join l>
+[08-17-2024 14:06:30] [I] STR + [0][0] = APPLE
+[08-17-2024 14:06:30] [I] STR + [1][0] = BANANA
+[08-17-2024 14:06:30] [I] 0
+[08-17-2024 14:06:35] [I] <kellaux: /join l>
+[08-17-2024 14:06:35] [I] STR + [0][0] = APPLE
+[08-17-2024 14:06:35] [I] STR + [1][0] = BANANA
+[08-17-2024 14:06:35] [I] 0
+[08-17-2024 14:09:33] [I] <kellaux: /join l>
+[08-17-2024 14:09:33] [I] STR + [0][0] = APPLE
+[08-17-2024 14:09:33] [I] STR + [1][0] = BANANA
+[08-17-2024 14:09:33] [I] 0
+[08-17-2024 14:10:20] [I] 1 mods loaded.
+[08-17-2024 14:10:20] [I] Server loaded. Type 'help' for help.
+[08-17-2024 14:10:24] [I] Opened a server on port 6567.
+[08-17-2024 14:10:29] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 14:10:32] [I] <kellaux: /join l>
+[08-17-2024 14:10:32] [I] STR + [0][0] = APPLE
+[08-17-2024 14:10:32] [I] STR + [1][0] = BANANA
+[08-17-2024 14:10:32] [I] 4
+[08-17-2024 14:58:43] [I] 1 mods loaded.
+[08-17-2024 14:58:43] [I] Server loaded. Type 'help' for help.
+[08-17-2024 14:58:47] [I] Opened a server on port 6567.
+[08-17-2024 14:59:08] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 14:59:13] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 14:59:49] [I] <kellaux: /join>
+[08-17-2024 15:02:09] [I] 1 mods loaded.
+[08-17-2024 15:02:09] [I] Server loaded. Type 'help' for help.
+[08-17-2024 15:02:13] [I] Opened a server on port 6567.
+[08-17-2024 15:02:18] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 15:02:20] [I] <kellaux: /join>
+[08-17-2024 15:02:20] [I] 1
+[08-17-2024 15:03:44] [I] 1 mods loaded.
+[08-17-2024 15:03:44] [I] Server loaded. Type 'help' for help.
+[08-17-2024 15:03:48] [I] Opened a server on port 6567.
+[08-17-2024 15:03:52] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 15:03:55] [I] <kellaux: /join>
+[08-17-2024 15:04:04] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 15:04:06] [I] <kellaux: /join>
+[08-17-2024 15:04:06] [I] 1
+[08-17-2024 15:04:36] [I] <kellaux: /join>
+[08-17-2024 15:04:36] [I] 1
+[08-17-2024 15:07:44] [I] Kicking connection 127.0.0.1 / /bXnwhZELWkAAAAA/TCAOA==; Reason: idInUse
+[08-17-2024 15:07:53] [I] All config values:
+[08-17-2024 15:07:53] [I] | name: Server
+[08-17-2024 15:07:53] [I] | | The server name as displayed on clients.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | desc: off
+[08-17-2024 15:07:53] [I] | | The server description, displayed under the name. Max 100 characters.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | port: 6567
+[08-17-2024 15:07:53] [I] | | The port to host on.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | autoUpdate: false
+[08-17-2024 15:07:53] [I] | | Whether to auto-update and exit when a new bleeding-edge update arrives.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | showConnectMessages: true
+[08-17-2024 15:07:53] [I] | | Whether to display connect/disconnect messages.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | enableVotekick: true
+[08-17-2024 15:07:53] [I] | | Whether votekick is enabled.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | startCommands: 
+[08-17-2024 15:07:53] [I] | | Commands run at startup. This should be a comma-separated list.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | logging: true
+[08-17-2024 15:07:53] [I] | | Whether to log everything to files.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | strict: true
+[08-17-2024 15:07:53] [I] | | Whether strict mode is on - corrects positions and prevents duplicate UUIDs.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | antiSpam: true
+[08-17-2024 15:07:53] [I] | | Whether spammers are automatically kicked and rate-limited.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | interactRateWindow: 6
+[08-17-2024 15:07:53] [I] | | Block interaction rate limit window, in seconds.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | interactRateLimit: 25
+[08-17-2024 15:07:53] [I] | | Block interaction rate limit.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | interactRateKick: 60
+[08-17-2024 15:07:53] [I] | | How many times a player must interact inside the window to get kicked.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | messageRateLimit: 0
+[08-17-2024 15:07:53] [I] | | Message rate limit in seconds. 0 to disable.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | messageSpamKick: 3
+[08-17-2024 15:07:53] [I] | | How many times a player must send a message before the cooldown to get kicked. 0 to disable.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | packetSpamLimit: 300
+[08-17-2024 15:07:53] [I] | | Limit for packet count sent within 3sec that will lead to a blacklist + kick.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | chatSpamLimit: 20
+[08-17-2024 15:07:53] [I] | | Limit for chat packet count sent within 2sec that will lead to a blacklist + kick. Not the same as a rate limit.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | socketInput: false
+[08-17-2024 15:07:53] [I] | | Allows a local application to control this server through a local TCP socket.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | socketInputPort: 6859
+[08-17-2024 15:07:53] [I] | | The port for socket input.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | socketInputAddress: localhost
+[08-17-2024 15:07:53] [I] | | The bind address for socket input.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | allowCustomClients: false
+[08-17-2024 15:07:53] [I] | | Whether custom clients are allowed to connect.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | whitelist: false
+[08-17-2024 15:07:53] [I] | | Whether the whitelist is used.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | motd: off
+[08-17-2024 15:07:53] [I] | | The message displayed to people on connection.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | autosave: false
+[08-17-2024 15:07:53] [I] | | Whether the periodically save the map when playing.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | autosaveAmount: 10
+[08-17-2024 15:07:53] [I] | | The maximum amount of autosaves. Older ones get replaced.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | autosaveSpacing: 300
+[08-17-2024 15:07:53] [I] | | Spacing between autosaves in seconds.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | debug: false
+[08-17-2024 15:07:53] [I] | | Enable debug logging.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | snapshotInterval: 200
+[08-17-2024 15:07:53] [I] | | Client entity snapshot interval in ms.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | autoPause: false
+[08-17-2024 15:07:53] [I] | | Whether the game should pause when nobody is online.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | roundExtraTime: 12
+[08-17-2024 15:07:53] [I] | | Time before loading a new map after the gameover, in seconds.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:07:53] [I] | maxLogLength: 5242880
+[08-17-2024 15:07:53] [I] | | The Maximum log file size, in bytes.
+[08-17-2024 15:07:53] [I] |
+[08-17-2024 15:10:04] [I] strict set to false.
+[08-17-2024 15:10:10] [I] ааа has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 15:10:10] [E] java.lang.NullPointerException: Cannot invoke "arc.util.Timer$Task.cancel()" because "data.left" is null
+	at main.java.hexed.Main.lambda$init$3(Main.java:95)
+	at arc.Events.fire(Events.java:53)
+	at arc.Events.fire(Events.java:43)
+	at mindustry.core.NetServer.connectConfirm(NetServer.java:813)
+	at mindustry.gen.ConnectConfirmCallPacket.handleServer(ConnectConfirmCallPacket.java:32)
+	at mindustry.net.Net.handleServerReceived(Net.java:312)
+	at mindustry.net.ArcNetProvider$2.lambda$received$2(ArcNetProvider.java:150)
+	at arc.util.TaskQueue.run(TaskQueue.java:17)
+	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:81)
+	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
+
+[08-17-2024 15:10:17] [I] <ааа: /joib>
+[08-17-2024 15:10:19] [I] <ааа: /join>
+[08-17-2024 15:10:19] [I] 1
+[08-17-2024 15:10:43] [I] <ааа: /join>
+[08-17-2024 15:10:43] [I] 1
+[08-17-2024 15:11:13] [I] ааа has disconnected. [/bXnwhZELWkAAAAA/TCAOA==] (closed)
+[08-17-2024 15:14:30] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (timeout)
+[08-17-2024 15:15:53] [I] kellaux has disconnected. [/bXnwhZELWkAAAAA/TCAOA==] (closed)
+[08-17-2024 15:29:28] [I] 1 mods loaded.
+[08-17-2024 15:29:28] [I] Server loaded. Type 'help' for help.
+[08-17-2024 15:30:41] [I] Opened a server on port 6567.
+[08-17-2024 15:31:29] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 15:34:21] [I] <kellaux: /join>
+[08-17-2024 15:34:38] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 15:34:40] [I] <kellaux: /join>
+[08-17-2024 15:34:40] [E] java.lang.NullPointerException: Cannot store to object array because "players[i]" is null
+	at main.java.hexed.Main.lambda$registerClientCommands$19(Main.java:296)
+	at arc.util.CommandHandler.handleMessage(CommandHandler.java:86)
+	at mindustry.core.NetClient.sendChatMessage(NetClient.java:253)
+	at mindustry.gen.SendChatMessageCallPacket.handleServer(SendChatMessageCallPacket.java:37)
+	at mindustry.net.Net.handleServerReceived(Net.java:312)
+	at mindustry.net.ArcNetProvider$2.lambda$received$2(ArcNetProvider.java:150)
+	at arc.util.TaskQueue.run(TaskQueue.java:17)
+	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:81)
+	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
+
+[08-17-2024 15:36:12] [I] 1 mods loaded.
+[08-17-2024 15:36:12] [I] Server loaded. Type 'help' for help.
+[08-17-2024 15:36:30] [I] Opened a server on port 6567.
+[08-17-2024 15:36:33] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 15:36:37] [I] <kellaux: /join>
+[08-17-2024 15:36:45] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 15:36:46] [I] <kellaux: /join>
+[08-17-2024 15:36:46] [I] 1
+[08-17-2024 15:42:13] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (timeout)
+[08-17-2024 17:04:12] [I] <kellaux: /join>
+[08-17-2024 17:04:39] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:04:40] [I] <kellaux: /join>
+[08-17-2024 17:04:40] [I] 1
+[08-17-2024 17:05:07] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (closed)
+[08-17-2024 17:12:17] [I] 1 mods loaded.
+[08-17-2024 17:12:17] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:12:30] [I] Opened a server on port 6567.
+[08-17-2024 17:12:34] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:12:39] [I] <kellaux: /join>
+[08-17-2024 17:12:39] [I] 0
+[08-17-2024 17:12:54] [I] <kellaux: /join>
+[08-17-2024 17:12:54] [I] 1
+[08-17-2024 17:13:04] [I] <kellaux: /join>
+[08-17-2024 17:13:04] [I] 2
+[08-17-2024 17:13:09] [I] <kellaux: /join>
+[08-17-2024 17:13:09] [I] 3
+[08-17-2024 17:14:47] [I] 1 mods loaded.
+[08-17-2024 17:14:47] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:14:58] [I] Opened a server on port 6567.
+[08-17-2024 17:15:00] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:15:02] [I] <kellaux: /join>
+[08-17-2024 17:15:07] [I] <kellaux: /join>
+[08-17-2024 17:20:30] [I] 1 mods loaded.
+[08-17-2024 17:20:30] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:20:42] [I] Opened a server on port 6567.
+[08-17-2024 17:20:48] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:20:51] [I] <kellaux: /join>
+[08-17-2024 17:21:06] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:21:09] [I] <kellaux: /join>
+[08-17-2024 17:21:09] [E] java.lang.NullPointerException: Cannot invoke "mindustry.core.UI.showMenu(String, String, String[][], arc.func.Intc)" because "mindustry.Vars.ui" is null
+	at mindustry.ui.Menus.menu(Menus.java:36)
+	at main.java.hexed.Main.lambda$registerClientCommands$19(Main.java:311)
+	at arc.util.CommandHandler.handleMessage(CommandHandler.java:86)
+	at mindustry.core.NetClient.sendChatMessage(NetClient.java:253)
+	at mindustry.gen.SendChatMessageCallPacket.handleServer(SendChatMessageCallPacket.java:37)
+	at mindustry.net.Net.handleServerReceived(Net.java:312)
+	at mindustry.net.ArcNetProvider$2.lambda$received$2(ArcNetProvider.java:150)
+	at arc.util.TaskQueue.run(TaskQueue.java:17)
+	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:81)
+	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
+
+[08-17-2024 17:21:54] [I] 1 mods loaded.
+[08-17-2024 17:21:54] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:21:58] [I] Opened a server on port 6567.
+[08-17-2024 17:22:02] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:22:07] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:22:10] [I] <kellaux: /join>
+[08-17-2024 17:25:44] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (timeout)
+[08-17-2024 17:29:29] [I] 1 mods loaded.
+[08-17-2024 17:29:29] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:29:32] [I] Opened a server on port 6567.
+[08-17-2024 17:29:35] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:29:41] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:29:43] [I] <kellaux: /join>
+[08-17-2024 17:29:59] [I] <kellaux: /accept kellaux>
+[08-17-2024 17:30:11] [I] <kellaux: /accept kellaux>
+[08-17-2024 17:33:03] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (disappeared)
+[08-17-2024 17:40:20] [I] 1 mods loaded.
+[08-17-2024 17:40:20] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:40:25] [I] Opened a server on port 6567.
+[08-17-2024 17:40:29] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:40:45] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:40:48] [I] <kellaux: /join>
+[08-17-2024 17:40:57] [I] <myrmyrmux: /accept>
+[08-17-2024 17:40:59] [E] java.lang.NullPointerException: Cannot invoke "mindustry.gen.Player.team()" because "sender" is null
+	at main.java.hexed.Main$2.get(Main.java:334)
+	at mindustry.ui.Menus.menuChoose(Menus.java:57)
+	at mindustry.gen.MenuChooseCallPacket.handleServer(MenuChooseCallPacket.java:48)
+	at mindustry.net.Net.handleServerReceived(Net.java:312)
+	at mindustry.net.ArcNetProvider$2.lambda$received$2(ArcNetProvider.java:150)
+	at arc.util.TaskQueue.run(TaskQueue.java:17)
+	at arc.backend.headless.HeadlessApplication.mainLoop(HeadlessApplication.java:81)
+	at arc.backend.headless.HeadlessApplication$1.run(HeadlessApplication.java:52)
+
+[08-17-2024 17:41:12] [I] myrmyrmux has disconnected. [tzQoM9H47PsAAAAAFdivew==] (closed)
+[08-17-2024 17:41:15] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:41:57] [I] <kellaux: /join>
+[08-17-2024 17:43:15] [I] 1 mods loaded.
+[08-17-2024 17:43:15] [I] Server loaded. Type 'help' for help.
+[08-17-2024 17:43:19] [I] Opened a server on port 6567.
+[08-17-2024 17:43:21] [I] kellaux has connected. [/bXnwhZELWkAAAAA/TCAOA==]
+[08-17-2024 17:43:27] [I] myrmyrmux has connected. [tzQoM9H47PsAAAAAFdivew==]
+[08-17-2024 17:43:30] [I] <kellaux: /join>
+[08-17-2024 17:43:37] [I] <myrmyrmux: /accept>
+[08-17-2024 17:43:42] [I] <kellaux: /join>

@@ -72,7 +72,7 @@ public class HexData {
 		}
 
 		public boolean isActive() {
-			return player.con.isConnected();
+			return player.con.isConnected() && team != Team.derelict;
 		}
 
 		public int getControlledCount() {
