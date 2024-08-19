@@ -11,8 +11,12 @@ import mindustry.maps.filters.GenerateFilter.*;
 import mindustry.world.*;
 
 import static mindustry.Vars.*;
-import static arc.util.noise.Simplex.noise2d;
+
 import static arc.math.Mathf.*;
+import static arc.util.noise.Simplex.noise2d;
+import static mindustry.content.Blocks.*;
+
+import mindustry.world.blocks.environment.Floor;
 
 public class HexGenerator implements Cons<Tiles> {
 
@@ -24,65 +28,45 @@ public class HexGenerator implements Cons<Tiles> {
 	public static final int hexDiameter = 74;
 	public static final int hexRadius = hexDiameter / 2;
 
-	Block[][] floors = {
-			{ Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.sand, Blocks.grass },
-			{ Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.grass, Blocks.grass },
-			{ Blocks.darksandWater, Blocks.darksand, Blocks.darksand, Blocks.darksand, Blocks.grass, Blocks.shale },
-			{ Blocks.darksandTaintedWater, Blocks.darksandTaintedWater, Blocks.moss, Blocks.moss, Blocks.sporeMoss,
-					Blocks.stone },
-			{ Blocks.ice, Blocks.iceSnow, Blocks.snow, Blocks.dacite, Blocks.hotrock, Blocks.salt }
-	};
-
 	Block[][] blocks = {
-			{ Blocks.stoneWall, Blocks.stoneWall, Blocks.sandWall, Blocks.sandWall, Blocks.pine, Blocks.pine },
-			{ Blocks.stoneWall, Blocks.stoneWall, Blocks.duneWall, Blocks.duneWall, Blocks.pine, Blocks.pine },
-			{ Blocks.stoneWall, Blocks.stoneWall, Blocks.duneWall, Blocks.duneWall, Blocks.pine, Blocks.pine },
-			{ Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall, Blocks.sporeWall,
-					Blocks.stoneWall },
-			{ Blocks.iceWall, Blocks.snowWall, Blocks.snowWall, Blocks.snowWall, Blocks.stoneWall, Blocks.saltWall }
+			{ darksand, darksandTaintedWater, sporeMoss, darksand },
+			{ darksand, darksandTaintedWater, dacite, darksand },
+			
 	};
 
 	public void get(Tiles tiles) {
-
-		// add ores
-		Seq<GenerateFilter> ores = new Seq<>();
-		GenerateInput input = new GenerateInput();
-		maps.addDefaultOres(ores);
-		ores.insert(0, new OreFilter() {
-			{
-				scl += 2 / 2.1f;
-			}
-		});
-		ores.each(GenerateFilter::randomize);
-
-		// fill map
-		int seed1 = Mathf.random(1000), seed2 = Mathf.random(1000);
+		// generate map
+		int seed1 = random(1000), seed2 = random(1000);
 		int temp, elev;
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				temp = clamp((int) ((noise2d(seed1, 12, 0.6, 1.0 / 400, x, y) - 0.5) * 10 * blocks.length), 0,
 						blocks.length - 1);
-				elev = clamp((int) (((noise2d(seed2, 12, 0.6, 1.0 / 700, x, y) - 0.5) * 10 + 0.15f) * blocks[0].length),
+				elev = clamp((int) (((noise2d(seed2, 12, 0.6, 1.0 / 400, x, y) - 0.5) * 10 + 0.15f) * blocks[0].length),
 						0, blocks[0].length - 1);
-				Block floor = floors[temp][elev];
-				Block wall = blocks[temp][elev];
-				Block ore = Blocks.air;
+				Floor floor = blocks[temp][elev].asFloor();
+				Block wall = floor.wall;
 
-				for (GenerateFilter filter : ores) {
-					input.floor = Blocks.stone;
-					input.block = wall;
-					input.overlay = ore;
-					input.x = x;
-					input.y = y;
-					input.width = input.height = size;
-					filter.apply(input);
-					if (input.overlay != Blocks.air) {
-						ore = input.overlay;
-					}
-				}
+				tiles.set(x, y, new Tile(x, y, floor, air, wall));
 
-				tiles.set(x, y, new Tile(x, y, floor, ore, wall));
 			}
+		}
+
+		// add ores
+		Seq<GenerateFilter> ores = new Seq<>();
+		maps.addDefaultOres(ores);
+		ores.add(new OreFilter() {
+			{
+				threshold -= 0.003f;
+				scl += 4f;
+			}
+		});
+
+		GenerateInput input = new GenerateInput();
+		for (GenerateFilter filter : ores) {
+			filter.randomize();
+			input.begin(width, height, tiles::get);
+			filter.apply(tiles, input);
 		}
 
 		// draw hexes

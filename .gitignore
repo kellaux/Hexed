@@ -1,7 +1,18 @@
-
 .gradle
 .vscode
 bin
 build
 tools
 
+tools/config/settings.log
+tools/config/mods/Hexed.jar
+bin/main/main/java/hexed/HexData.class
+bin/main/main/java/hexed/HexData$HexCaptureEvent.class
+bin/main/main/java/hexed/HexData$PlayerData.class
+bin/main/main/java/hexed/HexData$PlayerData$RequestData.class
+bin/main/main/java/hexed/HexGenerator.class
+bin/main/main/java/hexed/HexGenerator$1.class
+bin/main/main/java/hexed/Main.class
+bin/main/main/java/hexed/Main$1.class
+bin/main/main/java/hexed/Main$2.class
+.gitignore

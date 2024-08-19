@@ -1,16 +1,11 @@
 
 package main.java.hexed;
 
-import static arc.Core.app;
 import static mindustry.Vars.logic;
 import static mindustry.Vars.netServer;
 import static mindustry.Vars.state;
 import static mindustry.Vars.tilesize;
 import static mindustry.Vars.world;
-import static mindustry.content.Blocks.air;
-
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 
 import arc.Events;
 import arc.files.Fi;
@@ -19,13 +14,13 @@ import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.Time;
 import arc.util.Timer;
-import main.java.hexed.HexData.PlayerData;
-import main.java.hexed.HexData.PlayerData.RequestData;
+import main.java.hexed.PlayerData;
+import main.java.hexed.PlayerData.RequestData;
 import mindustry.content.Blocks;
 import mindustry.core.GameState.State;
 import mindustry.game.EventType.BlockBuildEndEvent;
 import mindustry.game.EventType.BlockDestroyEvent;
-import mindustry.game.EventType.MenuOptionChooseEvent;
+
 import mindustry.game.EventType.PlayerJoin;
 import mindustry.game.EventType.PlayerLeave;
 import mindustry.game.EventType.Trigger;
@@ -42,10 +37,9 @@ import mindustry.mod.Plugin;
 import mindustry.net.WorldReloader;
 import mindustry.type.ItemStack;
 import mindustry.ui.Menus;
-import mindustry.world.Build;
 import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
-import mindustry.world.meta.StatCat;
+import mindustry.world.blocks.storage.CoreBlock.CoreBuild;
 
 public class Main extends Plugin {
 
@@ -67,6 +61,8 @@ public class Main extends Plugin {
 		rules.buildSpeedMultiplier = 2f;
 		rules.blockHealthMultiplier = 1.5f;
 		rules.unitBuildSpeedMultiplier = 1.75f;
+
+		// uses for tests
 		rules.infiniteResources = true;
 
 		// i want to put it in a file but i cant :(
@@ -103,7 +99,7 @@ public class Main extends Plugin {
 		Events.on(PlayerLeave.class, event -> {
 			PlayerData data = PlayerData.getData(event.player);
 			if (data != null && data.leader) {
-				data.left = Timer.schedule(() -> killTeam(data.team), leftTeamDestroyTime);
+				data.left = Timer.schedule(() -> PlayerData.killTeam(data.team), leftTeamDestroyTime);
 			}
 		});
 
@@ -119,7 +115,7 @@ public class Main extends Plugin {
 			if (event.tile.block() instanceof CoreBlock) {
 				TeamData data = state.teams.get(event.tile.team());
 				if (data.noCores()) {
-					killTeam(data.team);
+					PlayerData.killTeam(data.team);
 				}
 			}
 		});
@@ -155,32 +151,6 @@ public class Main extends Plugin {
 			Call.setCameraPosition(player.con, hex.wx, hex.wy);
 
 		}
-	}
-
-	public void killTeam(Team team) {
-		// destroy buildings
-		world.tiles.eachTile(tile -> {
-			if (tile.build != null && tile.block() != air && tile.team() == team) {
-				tile.removeNet();
-			}
-		});
-
-		// kill units
-		Groups.player.each(player -> {
-			if (player.team() == team) {
-				player.team(Team.derelict);
-				player.clearUnit();
-			}
-		});
-
-		// clear datas
-		PlayerData.players.each(data -> {
-			if (data.team.equals(team)) {
-				data.player.clearUnit();
-				data.player.team(Team.derelict);
-				PlayerData.players.remove(data);
-			}
-		});
 	}
 
 	public void startGame() {
@@ -238,7 +208,7 @@ public class Main extends Plugin {
 			message.append("[yellow][[Captured]");
 		} else {
 			PlayerData data = PlayerData.players.find(d -> d.team == player.team() && d.leader);
-			message.append("Captured by ").append(data.player.name());
+			message.append("[lightgray]Captured by ").append(data.player.name());
 		}
 
 		Call.setHudText(player.con, message.toString());
@@ -256,6 +226,11 @@ public class Main extends Plugin {
 					.append(" hexes)\n[white]");
 		}
 		return builder.toString();
+	}
+
+	public void setCamera(Player player) {
+		CoreBuild core = state.teams.get(player.team()).core();
+		Call.setCameraPosition(player.con, core.tileX(), core.tileY());
 	}
 
 	// TODO
@@ -278,10 +253,9 @@ public class Main extends Plugin {
 			if (data == null) {
 				loadout(player);
 			} else if (data.leader) {
-				Log.info("DEBUG");
-				killTeam(null);
+				PlayerData.killTeam(player.team());
 			} else {
-				// TODO
+
 			}
 		});
 
@@ -298,14 +272,19 @@ public class Main extends Plugin {
 			} else {
 				String[][] options = new String[data.size][1];
 				Menus.MenuListener listener = new Menus.MenuListener() {
+
 					@Override
 					public void get(Player sender, int option) {
 						Player recipient = data.get(option).player;
-						PlayerData.requests.add(new RequestData(sender, recipient));
-						recipient.sendMessage(
-								sender.coloredName()
-										+ " [white]has sent you aninvitation. Type /accept to accpet player into team");
 
+						if (PlayerData.requests.contains(d -> d.sender == sender && d.recipient == recipient)) {
+							sender.sendMessage("you already send request");
+
+						} else {
+							PlayerData.requests.add(new RequestData(sender, recipient));
+							recipient.sendMessage(sender.coloredName()
+									+ " [white]has sent you aninvitation. Type /accept to accpet player into team");
+						}
 					}
 				};
 
@@ -337,18 +316,23 @@ public class Main extends Plugin {
 						} else {
 
 							if (PlayerData.getData(sender).leader) {
-								killTeam(sender.team());
+								PlayerData.killTeam(sender.team());
+								PlayerData.players.add(new PlayerData(sender, sender.team(), false));
+							} else {
+								PlayerData.killPlayer(sender);
 							}
 
 							sender.team(recipient.team());
-							PlayerData.players.add(new PlayerData(sender, sender.team(), false));
+							setCamera(sender);
 							PlayerData.requests.remove(data.get(option));
 						}
 
 					}
 				};
 
-				for (int i = 0; i < data.size; i++) {
+				for (
+
+						int i = 0; i < data.size; i++) {
 					options[i][0] = data.get(i).sender.coloredName();
 				}
 
