@@ -2,55 +2,68 @@ package main.java.hexed;
 
 import arc.Events;
 import arc.files.Fi;
+import arc.struct.ObjectMap;
 import arc.struct.Seq;
+import arc.struct.StringMap;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.Time;
 import arc.util.Timer;
 
 import main.java.hexed.PlayerData.RequestData;
-import mindustry.content.Blocks;
+import mindustry.content.Items;
 import mindustry.core.GameState.State;
+import mindustry.game.*;
 import mindustry.game.EventType.BlockBuildEndEvent;
 import mindustry.game.EventType.BlockDestroyEvent;
 
 import mindustry.game.EventType.PlayerJoin;
 import mindustry.game.EventType.PlayerLeave;
 import mindustry.game.EventType.Trigger;
-import mindustry.game.Rules;
-import mindustry.game.Schematic;
 import mindustry.game.Schematic.Stile;
 import mindustry.game.Teams.TeamData;
-import mindustry.game.Schematics;
-import mindustry.game.Team;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
+import mindustry.maps.Map;
 import mindustry.mod.Plugin;
 import mindustry.net.WorldReloader;
 import mindustry.type.ItemStack;
+import mindustry.type.Planet;
 import mindustry.ui.Menus;
 import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.blocks.storage.CoreBlock.CoreBuild;
 
+import static main.java.hexed.GenerateType.maps;
+import static mindustry.content.Blocks.*;
+import static mindustry.content.Planets.*;
+import static mindustry.type.ItemStack.list;
 import static mindustry.Vars.*;
+import static main.java.hexed.PlayerData.*;
+import static main.java.hexed.GenerateType.*;
 
 public class Main extends Plugin {
+    public static final Rules rules = new Rules();
+    public static final ObjectMap<Planet, PlanetData> planets = new ObjectMap<>();
 
     public static final float leftTeamDestroyTime = 90f;
     public static final float roundTime = 60 * 60 * 90f;
-    public static final int itemRequirment = 100;
+    public static final int itemRequirement = 100;
     public static final int winCaptureCount = 41;
-    public static final Rules rules = new Rules();
+
 
     public static float counter = roundTime;
-    public Schematic baseSchematic;
-    public Fi baseFile;
+    public static boolean restarting;
+
+    public static GenerateType type;
+    public static Fi baseFile;
 
     @Override
     public void init() {
-        rules.enemyCoreBuildRadius = HexGenerator.hexRadius * tilesize;
+        GenerateTypes.load();
+        //set default rules
+        rules.enemyCoreBuildRadius = hexRadius * tilesize;
         rules.canGameOver = false;
         rules.coreCapture = true;
         rules.buildSpeedMultiplier = 2f;
@@ -60,13 +73,18 @@ public class Main extends Plugin {
         // uses for tests
         rules.infiniteResources = true;
 
-        // i want to put it in a file but i cant :(
-        baseSchematic = Schematics.readBase64("bXNjaAB4nE2SgY7CIAyGC2yDsXkXH2Tvcq+AkzMmc1tQz/j210JpXDL8hu3/lxYY4FtBs4ZbBLvG1ync4wGO87bvMU2vsCzTEtIlwvCxBW7e1r/43hKYkGY4nFN4XqbfMD+29IbhvmHOtIc1LjCmuIcrfm3X9QH2PofHIyYY5y3FaX3OS3ze4fiRwX7dLa5nDHTPddkCkT3l1DcA/OALihZNq4H6NHnV+HZCVshJXA9VYZC9kfVU+VQGKSsbjVT1lOgp1qO4rGIo9yvnquxH1ORIohap6HVIDbtpaNlDi4cWD80eFJdrNhbJc8W61Jzdqi/3wrRIRii7GYdelvWMZDQs1kNbqtYe9/KuGvDX5zD6d5SML66+5dwRqXgQee5GK3Edxw1ITfb3SJ71OomzUAdjuWsWqZyJavd8Issdb5BqVbaoGCVzJqrddaUGTWSFHPs67m6H5HlaTqbqpFc91Kfn+2eQSp9pr96/Xtx6cevZjeKKDuUOklvvXy9uPGdNZFjZi7IXZS/n8Hyf/wFbjj/q");
+        planets.put(serpulo, new PlanetData(
+                Seq.with(oreCopper, oreLead, oreScrap, oreCoal, oreTitanium, oreThorium),
+                Schematics.readBase64("bXNjaAB4nE2SgY7CIAyGC2yDsXkXH2Tvcq+AkzMmc1tQz/j210JpXDL8hu3/lxYY4FtBs4ZbBLvG1ync4wGO87bvMU2vsCzTEtIlwvCxBW7e1r/43hKYkGY4nFN4XqbfMD+29IbhvmHOtIc1LjCmuIcrfm3X9QH2PofHIyYY5y3FaX3OS3ze4fiRwX7dLa5nDHTPddkCkT3l1DcA/OALihZNq4H6NHnV+HZCVshJXA9VYZC9kfVU+VQGKSsbjVT1lOgp1qO4rGIo9yvnquxH1ORIohap6HVIDbtpaNlDi4cWD80eFJdrNhbJc8W61Jzdqi/3wrRIRii7GYdelvWMZDQs1kNbqtYe9/KuGvDX5zD6d5SML66+5dwRqXgQee5GK3Edxw1ITfb3SJ71OomzUAdjuWsWqZyJavd8Issdb5BqVbaoGCVzJqrddaUGTWSFHPs67m6H5HlaTqbqpFc91Kfn+2eQSp9pr96/Xtx6cevZjeKKDuUOklvvXy9uPGdNZFjZi7IXZS/n8Hyf/wFbjj/q"),
+                list(Items.copper, 350, Items.lead, 250, Items.graphite, 150, Items.metaglass, 150, Items.silicon, 250, Items.titanium, 50)
+        ));
+
+        // I want to put it in a file but I cant :(
 
         Events.run(Trigger.update, () -> {
             if (!state.isPlaying()) return;
 
-            PlayerData.players.each(data -> {
+            players.each(data -> {
                 updateText(data.player);
                 if (data.getControlledCount() >= winCaptureCount) endGame();
             });
@@ -76,27 +94,30 @@ public class Main extends Plugin {
         });
 
         Events.on(PlayerJoin.class, event -> {
-            PlayerData data = PlayerData.getData(event.player);
+            PlayerData data = getData(event.player);
             if (data == null) {
                 loadout(event.player);
             } else {
-                data.left.cancel();
+                if (data.leader) data.left.cancel();
                 event.player.team(data.team);
+                setCamera(event.player);
             }
         });
 
         Events.on(PlayerLeave.class, event -> {
-            PlayerData data = PlayerData.getData(event.player);
+            PlayerData data = getData(event.player);
             if (data != null && data.leader) {
-                data.left = Timer.schedule(() -> PlayerData.killTeam(data.team), leftTeamDestroyTime);
+                data.left = Timer.schedule(() -> {
+                    killTeam(data.team);
+                    removeTeamData(data.team);
+                }, leftTeamDestroyTime);
             }
         });
 
         Events.on(BlockBuildEndEvent.class, event -> {
             Hex hex = HexData.getClosestHex(event.tile);
-            event.unit.getPlayer().sendMessage("HEX: " + hex.id);
-            if (!hex.hasCore() && hex.isCaptured(event.tile)) {
-                world.tile(hex.x, hex.y).setNet(Blocks.coreShard, event.team, 0);
+            if (!hex.hasCore() && hex.isCaptureProgress(event.tile)) {
+                world.tile(hex.x, hex.y).setNet(type.planet.defaultCore, event.team, 0);
             }
         });
 
@@ -105,7 +126,7 @@ public class Main extends Plugin {
             if (event.tile.block() instanceof CoreBlock) {
                 TeamData data = state.teams.get(event.tile.team());
                 if (data.noCores()) {
-                    PlayerData.killTeam(data.team);
+                    killTeam(data.team);
                 }
             }
         });
@@ -116,25 +137,28 @@ public class Main extends Plugin {
     public void loadout(Player player) {
         Hex hex = HexData.getFirstHex();
         if (hex == null) {
-
+            player.sendMessage("There are no hexes available");
         } else {
+            PlanetData data = planets.get(type.planet);
+            Seq<ItemStack> loadout = data.items;
+            Schematic schematic = data.schematic;
 
-            player.team(PlayerData.getTeam());
-            PlayerData.players.add(new PlayerData(player, player.team()));
+            player.team(getTeam());
+            players.add(new PlayerData(player, player.team()));
 
-            Stile coreTile = baseSchematic.tiles.find(stile -> stile.block instanceof CoreBlock);
-            baseSchematic.tiles.each(stile -> {
+            Stile coreTile = schematic.tiles.find(stile -> stile.block instanceof CoreBlock);
+            schematic.tiles.each(stile -> {
                 if (stile == null) return;
+
                 int ox = hex.x - coreTile.x;
                 int oy = hex.y - coreTile.y;
+
                 Tile tile = world.tile(stile.x + ox, stile.y + oy);
                 tile.setNet(stile.block, player.team(), stile.rotation);
                 tile.build.configureAny(stile.config);
-                if (stile == coreTile) {
-                    for (ItemStack stack : state.rules.loadout) {
-                        Call.setItem(tile.build, stack.item, stack.amount);
-                    }
-                }
+
+                if (stile == coreTile)
+                    loadout.each(stack -> Call.setItem(tile.build, stack.item, stack.amount));
             });
 
             Call.setCameraPosition(player.con, hex.wx, hex.wy);
@@ -142,42 +166,44 @@ public class Main extends Plugin {
         }
     }
 
-    public void startGame() {
+    public void startGame(GenerateType next) {
+        type = next;
+
         HexData.initHexes();
         PlayerData.initTeams();
+
         WorldReloader reloader = new WorldReloader();
         reloader.begin();
 
         HexGenerator generator = new HexGenerator();
-        world.loadGenerator(HexGenerator.width, HexGenerator.height, generator);
-
-        state.rules = rules.copy();
+        world.loadGenerator(width, height, generator);
+        state.rules = type.applyRules(rules.copy());
         logic.play();
 
         reloader.end();
     }
 
     public void endGame() {
-        Events.fire("Gameover");
+        if (restarting) return;
+        restarting = true;
+
         Time.runTask(60f * 15f, this::reload);
 
-
-        // show leaderboard
-        Call.infoMessage("GAME OVER");
-
+        Seq<PlayerData> data = PlayerData.getLeaderboard();
+        Call.infoMessage(data.first().player.coloredName() + " won round\n\n " + getLeaderboard());
 
     }
 
     public void reload() {
         // clear data's
         HexData.hexes.clear();
-        PlayerData.players.clear();
-        PlayerData.teams.clear();
-        PlayerData.requests.clear();
+        players.clear();
+        teams.clear();
+        requests.clear();
 
         Seq<Player> players = Groups.player.copy(new Seq<>());
         counter = roundTime;
-        startGame();
+        startGame(type.nextMap());
         players.each(this::loadout);
     }
 
@@ -187,7 +213,7 @@ public class Main extends Plugin {
         if (hex == null) return;
 
         Team team = hex.getController();
-        float progress = hex.getProgressPrecent(player.team());
+        float progress = hex.getProgressPercent(player.team());
         StringBuilder message = new StringBuilder("[white]Hex # " + hex.id + "\n");
 
         if (team == null) {
@@ -199,7 +225,7 @@ public class Main extends Plugin {
         } else if (team == player.team()) {
             message.append("[yellow][[Captured]");
         } else {
-            PlayerData data = PlayerData.players.find(d -> d.team == player.team() && d.leader);
+            PlayerData data = players.find(d -> d.team == player.team() && d.leader);
             message.append("[lightgray]Captured by ").append(data.player.name());
         }
 
@@ -207,15 +233,12 @@ public class Main extends Plugin {
     }
 
     public String getLeaderboard() {
-        Seq<PlayerData> leaderboard = PlayerData.getLeaderboard();
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < leaderboard.size; i++) {
-            if (i > 4) {
-                break;
-            }
-            PlayerData data = leaderboard.get(i);
-            builder.append(data.player.name).append("[orange] (").append(data.getControlledCount()).append(" hexes)\n[white]");
-        }
+
+        Seq<PlayerData> leaderboard = PlayerData.getLeaderboard();
+        leaderboard.truncate(5);
+        leaderboard.each(data -> builder.append(data.player.coloredName()).append("[orange] ").append(data.getControlledCount()).append(" hexes\n[white]"));
+
         return builder.toString();
     }
 
@@ -227,95 +250,94 @@ public class Main extends Plugin {
     // TODO
     @Override
     public void registerServerCommands(CommandHandler handler) {
-        handler.register("hexed", "Begin hosting with the Hexed gamemode.", args -> {
+        handler.register("hexed", "Begin hosting with the Hexed game mode.", args -> {
             if (!state.is(State.menu)) {
                 Log.err("Stop the server first.");
                 return;
             }
-
-            startGame();
+            startGame(type = maps.random());
             netServer.openServer();
+            state.map = new Map(StringMap.of("name", type.name));
         });
     }
 
     public void registerClientCommands(CommandHandler handler) {
         handler.<Player>register("spectate", "Enter spectator mode. This destroys your base.", (args, player) -> {
-            PlayerData data = PlayerData.getData(player);
+            PlayerData data = getData(player);
             if (data == null) {
                 loadout(player);
-            } else if (data.leader) {
-                PlayerData.killTeam(player.team());
             } else {
-                //TODO
+                if (data.leader) {
+                    killTeam(data.team);
+                    removeTeamData(data.team);
+                } else {
+                    killPlayer(data.player);
+                    players.remove(data);
+                }
+
             }
         });
 
         handler.<Player>register("lb", "Display the leaderboard", (args, player) -> player.sendMessage(getLeaderboard()));
 
-        // TODO
         handler.<Player>register("join", "Join the player.", (args, sender) -> {
-            Seq<PlayerData> data = PlayerData.players.select(d -> d.leader && d.isActive() && d.team != sender.team());
-            if (data.isEmpty()) {
+            Seq<PlayerData> data = players.select(d -> d.leader && d.isActive() && d.team != sender.team());
 
+            if (data.isEmpty()) {
+                sender.sendMessage("There are no available players");
             } else {
-                String[][] options = new String[data.size][1];
                 Menus.MenuListener listener = (sender1, option) -> {
                     Player recipient = data.get(option).player;
 
-                    if (PlayerData.requests.contains(d -> d.sender == sender1 && d.recipient == recipient)) {
+                    if (requests.contains(d -> d.sender == sender1 && d.recipient == recipient)) {
                         sender1.sendMessage("you already send request");
 
                     } else {
-                        PlayerData.requests.add(new RequestData(sender1, recipient));
-                        recipient.sendMessage(sender1.coloredName() + " [white]has sent you invitation. Type /accept to accept player into team");
+                        requests.add(new RequestData(sender1, recipient));
+                        recipient.sendMessage(sender1.coloredName() + " [white]A player has sent you an invitation. To accept the player into your team, type /accept.");
                     }
                 };
 
-                for (int i = 0; i < data.size; i++) {
-                    options[i][0] = data.get(i).player.coloredName();
-                }
+                String[][] options = new String[data.size][1];
+                data.sort().each(d -> options[data.indexOf(d)][0] = d.player.coloredName());
 
-                int mainid = Menus.registerMenu(listener);
-                Call.menu(sender.con, mainid, "/JOIN", "PLAYERS", options);
+                Call.menu(sender.con, Menus.registerMenu(listener), "/JOIN", "PLAYERS", options);
 
             }
 
         });
 
         handler.<Player>register("accept", "Accept the invitation", (args, recipient) -> {
-            Seq<RequestData> data = PlayerData.requests.select(d -> d.recipient.equals(recipient));
+            Seq<RequestData> data = requests.select(d -> d.recipient == recipient);
+
             if (data.isEmpty()) {
-
+                recipient.sendMessage("You have not yet received a request");
             } else {
-                String[][] options = new String[data.size][1];
-                Menus.MenuListener listener = (recipient1, option) -> {
-                    Player sender = Groups.player.find(p -> p.equals(data.get(option).sender));
-                    if (sender == null) {
-
+                Menus.MenuListener listener = (player, option) -> {
+                    Player sender = Groups.player.find(p -> p == data.get(option).sender);
+                    PlayerData senderData = getData(sender);
+                    Team playerTeam = player.team();
+                    if (senderData == null) {
+                        players.add(new PlayerData(sender, playerTeam, false));
                     } else {
-
-                        if (PlayerData.getData(sender).leader) {
-                            PlayerData.killTeam(sender.team());
-                            PlayerData.players.add(new PlayerData(sender, sender.team(), false));
+                        if (senderData.leader) {
+                            killTeam(sender.team());
+                            senderData.leader = false;
                         } else {
-                            PlayerData.killPlayer(sender);
+                            killPlayer(sender);
                         }
-
-                        sender.team(recipient1.team());
-                        setCamera(sender);
-                        PlayerData.requests.remove(data.get(option));
+                        senderData.team = playerTeam;
                     }
 
+                    sender.team(playerTeam);
+                    requests.remove(data.get(option));
+                    setCamera(player);
                 };
 
-                for (
+                String[][] options = new String[data.size][1];
+                data.sort().each(d -> options[data.indexOf(d)][0] = d.sender.coloredName());
 
-                        int i = 0; i < data.size; i++) {
-                    options[i][0] = data.get(i).sender.coloredName();
-                }
-
-                int mainid = Menus.registerMenu(listener);
-                Call.menu(recipient.con, mainid, "/ACCEPT", "PLAYERS", options);
+                Call.menu(recipient.con, Menus.registerMenu(listener), "/ACCEPT", "PLAYERS", options);
             }
         });
     }

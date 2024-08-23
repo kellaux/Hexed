@@ -1,10 +1,10 @@
 package main.java.hexed;
 
 import arc.struct.*;
-import arc.math.geom.*;
 import arc.util.Timer.Task;
 import mindustry.game.Team;
 import mindustry.gen.*;
+
 import static mindustry.content.Blocks.air;
 
 import static mindustry.Vars.*;
@@ -13,9 +13,8 @@ public class PlayerData {
 
     public static Seq<PlayerData> players = new Seq<>();
     public static Seq<RequestData> requests = new Seq<>();
-
+    public static Seq<Team> teams = new Seq<>();
     // rewrite to array[256]?
-    public static IntSeq teams = new IntSeq();
 
     public Player player;
     public Team team;
@@ -39,21 +38,15 @@ public class PlayerData {
     }
 
     public static PlayerData getData(Team team) {
-        return players.find(data -> data.player.team().equals(team));
+        return players.find(data -> data.player.team() == team);
     }
 
     public static Team getTeam() {
-        return Team.get(teams.removeIndex(teams.random()));
-    }
-
-    public static void addTeam(Team team) {
-        teams.add(team.compareTo(team));
+        return teams.remove(teams.random().id);
     }
 
     public static void initTeams() {
-        for (int i = 1; i < 256; i++) {
-            teams.add(i);
-        }
+        teams.addAll(Team.all);
     }
 
     public static void killPlayer(Player player) {
@@ -71,17 +64,19 @@ public class PlayerData {
 
         // kill units
         Groups.player.each(player -> {
-            if (player.team() == team) {
-                killPlayer(player);
-            }
+            if (player.team() == team) killPlayer(player);
         });
 
-        // clear data
-        PlayerData.players.removeAll(data -> data.team.equals(team));
+        teams.add(team);
     }
 
+    public static void removeTeamData(Team team) {
+        players.removeAll(data -> data.team == team);
+    }
+
+
     public boolean isActive() {
-        return player.con.isConnected() && team != Team.derelict;
+        return player.con.isConnected();
     }
 
     public int getControlledCount() {
@@ -89,7 +84,7 @@ public class PlayerData {
     }
 
     public static Seq<PlayerData> getLeaderboard() {
-        return players.select(data -> data.getControlledCount() > 0 && data.leader).sort(data -> data.getControlledCount());
+        return players.select(data -> data.getControlledCount() > 0 && data.leader).sort(PlayerData::getControlledCount);
     }
 
     public static class RequestData {
