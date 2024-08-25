@@ -1,4 +1,4 @@
-package main.java.hexed;
+package main.java.hexed.generation;
 
 import arc.func.Cons;
 import arc.struct.Seq;
@@ -13,7 +13,7 @@ import mindustry.world.blocks.environment.Floor;
 
 import static arc.math.Mathf.*;
 import static arc.util.noise.Simplex.noise2d;
-import static main.java.hexed.Main.planets;
+import static main.java.hexed.Vars.planets;
 import static mindustry.content.Blocks.air;
 
 public class GenerateType {
@@ -23,8 +23,8 @@ public class GenerateType {
     public static final int width = size;
     public static final int height = size;
     public static final int spacing = 78;
-    public static final int hexDiameter = 74;
-    public static final int hexRadius = hexDiameter / 2;
+    public static final int diameter = 74;
+    public static final int side = diameter / 2;
 
     public final String name;
     public final Planet planet;

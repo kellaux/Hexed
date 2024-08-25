@@ -1,7 +1,9 @@
-package main.java.hexed;
+package main.java.hexed.data;
 
 import arc.struct.*;
 import arc.math.geom.*;
+import main.java.hexed.Hex;
+import main.java.hexed.generation.HexedGenerator;
 import mindustry.gen.*;
 
 public class HexData {
@@ -9,7 +11,7 @@ public class HexData {
     public static Seq<Hex> hexes = new Seq<>();
 
     public static void initHexes() {
-        HexGenerator.getHexesPos((x, y) -> hexes.add(new Hex(hexes.size + 1, x, y)));
+        HexedGenerator.getHexesPos((x, y) -> hexes.add(new Hex(hexes.size + 1, x, y)));
     }
 
     public static Hex getFirstHex() {

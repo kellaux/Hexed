@@ -1,6 +1,6 @@
 package main.java.hexed;
 
-import static main.java.hexed.GenerateType.*;
+import static main.java.hexed.generation.GenerateType.*;
 import static mindustry.Vars.tilesize;
 import static mindustry.Vars.world;
 
@@ -10,6 +10,7 @@ import mindustry.game.Team;
 import mindustry.type.ItemStack;
 import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
+import static main.java.hexed.Vars.*;
 
 public class Hex {
 
@@ -33,17 +34,17 @@ public class Hex {
 	}
 
 	public float getProgressPercent(Team team) {
-		return progress[team.id] * Main.itemRequirement / 100;
+		return progress[team.id] * itemRequirement / 100;
 	}
 
 	public boolean isCaptureProgress(Tile tile) {
 		int team = tile.team().id;
-		if (Intersector.isInsideHexagon(wx, wy, hexDiameter * tilesize, tile.worldx(), tile.worldy())) {
+		if (Intersector.isInsideHexagon(wx, wy, diameter * tilesize, tile.worldx(), tile.worldy())) {
 			for (ItemStack stack : tile.block().requirements) {
 				progress[team] += stack.amount * stack.item.cost;
 			}
 		}
-		return progress[team] >= Main.itemRequirement;
+		return progress[team] >= itemRequirement;
 	}
 
 	@Nullable

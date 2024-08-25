@@ -1,4 +1,4 @@
-package main.java.hexed;
+package main.java.hexed.generation;
 
 import static mindustry.content.Planets.*;
 

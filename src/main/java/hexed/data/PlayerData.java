@@ -1,9 +1,10 @@
-package main.java.hexed;
+package main.java.hexed.data;
 
 import arc.struct.*;
 import arc.util.Timer.Task;
 import mindustry.game.Team;
 import mindustry.gen.*;
+import mindustry.net.Administration;
 
 import static mindustry.content.Blocks.air;
 
@@ -31,6 +32,7 @@ public class PlayerData {
         this.player = player;
         this.team = team;
         this.leader = leader;
+
     }
 
     public static PlayerData getData(Player player) {
