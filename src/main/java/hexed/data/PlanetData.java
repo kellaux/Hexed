@@ -6,30 +6,51 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 
 public class PlanetData {
-    public Seq<Block> ores;
+    public Seq<Ore> ores;
     public Schematic schematic;
     public Seq<ItemStack> items;
     public Seq<Loadout> blocks;
 
-    public PlanetData(Seq<Block> ores, Schematic schematic, Seq<ItemStack> items) {
+    public PlanetData(Seq<Ore> ores, Schematic schematic, Seq<ItemStack> items) {
         this.ores = ores;
         this.schematic = schematic;
         this.items = items;
     }
 
-    public PlanetData(Seq<Block> ores, Seq<Loadout> blocks) {
+    public PlanetData(Seq<Ore> ores, Seq<Loadout> blocks) {
         this.ores = ores;
         this.blocks = blocks;
     }
 
-    public static Seq<Loadout> list(Object... blocks) {
-        Seq<Loadout> loadouts = new Seq<>(blocks.length / 4);
+    public static Seq<Loadout> list(Object... objects) {
+        Seq<Loadout> loadouts = new Seq<>(objects.length / 4);
 
-        for (int i = 0; i < blocks.length; i += 4) {
-            loadouts.add(new Loadout((Block) blocks[i], (float) blocks[i + 1], (int) blocks[i + 2], (int) blocks[i + 3]));
+        for (int i = 0; i < objects.length; i += 4) {
+            loadouts.add(new Loadout((Block) objects[i], (float) objects[i + 1], (int) objects[i + 2], (int) objects[i + 3]));
         }
 
         return loadouts;
+    }
+
+    public static class Ore {
+        public Block ore;
+        public float threshold;
+        public float scl;
+
+        public Ore(Block ore, float threshold, float scl) {
+            this.ore = ore;
+            this.threshold = ore.asFloor().oreThreshold + threshold;
+            this.scl = ore.asFloor().oreScale + scl;
+        }
+
+        public Ore(Block ore) {
+            this.ore = ore;
+            this.threshold = ore.asFloor().oreThreshold;
+            this.scl = ore.asFloor().oreScale;
+        }
+
+        public static void setDefault(float threshold, float scl) {
+        }
     }
 
     public static class Loadout {

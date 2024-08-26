@@ -37,14 +37,23 @@ public class Hex {
 		return progress[team.id] * itemRequirement / 100;
 	}
 
-	public boolean isCaptureProgress(Tile tile) {
-		int team = tile.team().id;
-		if (Intersector.isInsideHexagon(wx, wy, diameter * tilesize, tile.worldx(), tile.worldy())) {
-			for (ItemStack stack : tile.block().requirements) {
-				progress[team] += stack.amount * stack.item.cost;
+
+	//It needs to be optimized
+	public boolean isCaptureProgress(Team team) {
+		int id = team.id;
+		progress[id] = 0;
+		for(int x = 0; x < width; x++) {
+			for(int y = 0; y < height; y++) {
+				if (Intersector.isInsideHexagon(wx, wy, diameter * tilesize, x * tilesize, y * tilesize)) {
+					Tile tile = world.tile(x, y);
+					for (ItemStack stack : tile.block().requirements) {
+						progress[id] += stack.item.cost * 2f;
+					}
+				}
 			}
 		}
-		return progress[team] >= itemRequirement;
+
+		return progress[id] >= itemRequirement;
 	}
 
 	@Nullable

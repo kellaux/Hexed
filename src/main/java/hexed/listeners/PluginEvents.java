@@ -52,7 +52,7 @@ public class PluginEvents {
 
         arc.Events.on(EventType.BlockBuildEndEvent.class, event -> {
             Hex hex = HexData.getClosestHex(event.tile);
-            if (!hex.hasCore() && hex.isCaptureProgress(event.tile)) {
+            if (!hex.hasCore() && hex.isCaptureProgress(event.team)) {
                 world.tile(hex.x, hex.y).setNet(type.planet.defaultCore, event.team, 0);
             }
         });

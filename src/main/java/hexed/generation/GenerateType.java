@@ -82,9 +82,9 @@ public class GenerateType {
 
         // add ores
         Seq<OreFilter> ores = planets.get(planet).ores.map(block -> new OreFilter() {{
-            threshold = block.asFloor().oreThreshold - 0.04f;
-            scl = block.asFloor().oreScale + 8f;
-            ore = block.asFloor();
+            threshold = block.threshold;
+            scl = block.scl;
+            ore = block.ore;
         }});
 
         applyFilters(tiles, ores.toArray(OreFilter.class));

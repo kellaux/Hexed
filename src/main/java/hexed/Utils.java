@@ -2,6 +2,7 @@ package main.java.hexed;
 
 import arc.struct.Seq;
 import arc.util.Time;
+import arc.util.Timer;
 import main.java.hexed.data.HexData;
 import main.java.hexed.data.PlanetData;
 import main.java.hexed.data.PlayerData;
@@ -25,6 +26,7 @@ import static main.java.hexed.data.PlayerData.*;
 import static main.java.hexed.Utils.*;
 import static mindustry.Vars.*;
 import static mindustry.Vars.state;
+import static mindustry.content.Blocks.coreNucleus;
 
 public class Utils {
     public static boolean restarting;
@@ -41,28 +43,28 @@ public class Utils {
 
             PlanetData data = planets.get(type.planet);
             Seq<ItemStack> loadout = data.items;
-            Schematic schematic = data.schematic;
-            Schematic.Stile coreTile = schematic.tiles.find(stile -> stile.block instanceof CoreBlock);
-            schematic.tiles.each(stile -> {
-                if (stile == null) return;
-
-                int ox = hex.x - coreTile.x;
-                int oy = hex.y - coreTile.y;
-
-                Tile tile = world.tile(stile.x + ox, stile.y + oy);
-                tile.setNet(stile.block, player.team(), stile.rotation);
-                tile.build.configureAny(stile.config);
-
-                if (stile == coreTile)
-                    loadout.each(stack -> Call.setItem(tile.build, stack.item, stack.amount));
-            });
+//            Schematic schematic = data.schematic;
+//            Schematic.Stile coreTile = schematic.tiles.find(stile -> stile.block instanceof CoreBlock);
+//            schematic.tiles.each(stile -> {
+//                if (stile == null) return;
+//
+//                int ox = hex.x - coreTile.x;
+//                int oy = hex.y - coreTile.y;
+//
+//                Tile tile = world.tile(stile.x + ox, stile.y + oy);
+//                tile.setNet(stile.block, player.team(), stile.rotation);
+//                tile.build.configureAny(stile.config);
+//
+//                if (stile == coreTile)
+//                    loadout.each(stack -> Call.setItem(tile.build, stack.item, stack.amount));
+//            });
 
 //            PlanetData planet = planets.get(type.planet);
 //            Seq<PlanetData.Loadout> blocks = planet.blocks;
-
+//
 //            player.team(getTeam());
 //            players.add(new PlayerData(player, player.team()));
-
+//
 //            for(int i = 0; i < 600; i++) {
 //                int firstAngleFactor = (int) (Math.floor(Math.random() * 3) * 2);
 //                int secondAngleFactor = firstAngleFactor + 2;
@@ -82,19 +84,19 @@ public class Utils {
 //                    tile.setNet(arc);
 //            }
 
-//            planet.blocks.each(block -> {
-//                HexedGenerator.randomPointInHexagon(block, player.team(), hex, 10);
-//            });
-//
-//            world.tile(hex.x, hex.y).setNet(coreNucleus, player.team(), 0);
+            data.blocks.each(block -> {
+                HexedGenerator.randomPointInHexagon(block, player.team(), hex, 10);
+            });
+
+            world.tile(hex.x, hex.y).setNet(coreNucleus, player.team(), 0);
 
             Call.setCameraPosition(player.con, hex.wx, hex.wy);
 
         }
     }
 
-    static double getRandomValue(double[] xArray, double[] yArray) {
-        // xArray[0] = 0, xArray[xArray.length - 1] = 1, xArray[n] пренадлежит [0; 1]
+    public static double getRandomValue(double[] xArray, double[] yArray) {
+        // xArray[0] = 0, xArray[xArray.length - 1] = 1, xArray[n] принадлежит [0; 1]
         double result = 0;
         double value = Math.random();
         for (int i = 1; i < xArray.length; i++) {
@@ -124,7 +126,7 @@ public class Utils {
         reload.end();
     }
 
-    static void endGame() {
+    public static void endGame() {
         if (restarting) return;
         restarting = true;
 
@@ -135,7 +137,7 @@ public class Utils {
 
     }
 
-    static void reload() {
+    public static void reload() {
         // clear data's
         HexData.hexes.clear();
         players.clear();
@@ -158,15 +160,15 @@ public class Utils {
 
         if (team == null) {
             if (progress > 0) {
-                message.append("[lightgray]Capture progress: [accent]").append((int) (progress)).append("%");
+                message.append("[white]Capture progress: [accent]").append((int) (progress)).append("%");
             } else {
-                message.append("[lightgray][[Empty]");
+                message.append("[white][Empty]");
             }
         } else if (team == player.team()) {
-            message.append("[yellow][[Captured]");
+            message.append("[accent][Captured]");
         } else {
             PlayerData data = players.find(d -> d.team == player.team() && d.leader);
-            message.append("[lightgray]Captured by ").append(data.player.name());
+            message.append("[white]Captured by ").append(data.player.name());
         }
 
         Call.setHudText(player.con, message.toString());
@@ -178,7 +180,10 @@ public class Utils {
 
         Seq<PlayerData> leaderboard = PlayerData.getLeaderboard();
         leaderboard.truncate(5);
-        leaderboard.each(data -> builder.append(data.player.coloredName()).append("[orange] ").append(data.getControlledCount()).append(" hexes\n[white]"));
+        leaderboard.each(data -> builder.append(leaderboard.indexOf(data) + 1)
+                .append(". ").append(data.player.coloredName())
+                .append("[orange][white] (").append(data.getControlledCount())
+                .append(" hexes)\n[white]"));
 
         return builder.toString();
     }

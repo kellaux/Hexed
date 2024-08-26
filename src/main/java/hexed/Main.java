@@ -24,7 +24,6 @@ public class Main extends Plugin {
 
     @Override
     public void registerServerCommands(CommandHandler handler) {
-
         ServerCommands.load(handler);
     }
 
